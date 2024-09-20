@@ -3,7 +3,7 @@ import { auth } from "../../../../auth"
 const settingsPage = async () => {
     const session = await auth();
     return (
-        <div>
+        <div className="text-center">
             {JSON.stringify(session)}
         </div>
     )

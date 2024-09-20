@@ -6,8 +6,7 @@ import {
     publicRoutes,
     authRoutes
 } from "./routes";
-import { NextResponse } from "next/server"; // Import NextResponse for redirects
-import next from "next";
+import { NextResponse } from "next/server"; 
 
 const { auth } = NextAuth(authConfig);
 
@@ -43,3 +42,8 @@ export const config = {
         '/(api|trpc)(.*)',
     ],
 };
+
+
+
+
+
