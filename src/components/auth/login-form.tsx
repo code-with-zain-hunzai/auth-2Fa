@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components//ui/button";
+import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { Login } from "../../../actions/login";
@@ -39,9 +39,14 @@ const LoginForm = () => {
         startTransition(() => {
             Login(values)
                 .then((data) => {
-                    setError(data.error)
-                    setSuccess(data.success)
+                    if (data) {
+                        setError(data.error || "");
+                        setSuccess(data.success || "");
+                    } 
                 })
+                .catch((err) => {
+                    setError("An unexpected error occurred");
+                });
         })
     }
 
