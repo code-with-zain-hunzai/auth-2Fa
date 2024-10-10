@@ -42,9 +42,8 @@ const LoginForm = () => {
         startTransition(() => {
             Login(values)
                 .then((data) => {
-                        setError(data?.error);
-                        // Todo: Add when we add 2fa
-                        // setSuccess(data?.success);
+                    setError(data?.error);
+                    setSuccess(data?.success);
                 })
         })
     }
@@ -91,6 +90,7 @@ const LoginForm = () => {
                     <FormError message={error || urlError} />
                     <FormSuccess message={success} />
                     <Button
+                        disabled={isPending}
                         type="submit"
                         className="w-full">
                         Login</Button>

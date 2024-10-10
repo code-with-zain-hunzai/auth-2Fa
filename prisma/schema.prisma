@@ -14,8 +14,8 @@ datasource db {
 }
 
 enum UserRole {
-ADMIN
-USER
+  ADMIN
+  USER
 }
 
 model User {
@@ -49,4 +49,13 @@ model Account {
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
+}
+
+model VerificationToken {
+  id    String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
 }
