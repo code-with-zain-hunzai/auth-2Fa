@@ -26,6 +26,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-icons": "^5.3.0",
+    "react-spinners": "^0.14.1",
     "resend": "^4.0.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
