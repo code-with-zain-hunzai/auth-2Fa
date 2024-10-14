@@ -32,24 +32,20 @@ const ResetForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof ResetSchema>) => {
-    setError("");
-    setSuccess("");
+    setError(""); 
+    setSuccess(""); 
 
     startTransition(() => {
-      reset(values)
-        .then((data) => {
-          if (data?.error) {
-            setError(data.error); // Set error if it exists
-          }
-          if (data?.success) {
-            setSuccess(data.success); // Set success if email is sent
-          }
-        })
-        .catch(() => {
-          setError("An unexpected error occurred."); // Catch any other error
-        });
-    });
-  };
+        reset(values)
+            .then((data) => {
+                if (data?.error) {
+                    setError(data.error); 
+                } else {
+                    setSuccess(data.success);
+                }
+            })
+    })
+}
 
   return (
     <CardWrapper
