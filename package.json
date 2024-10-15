@@ -30,6 +30,7 @@
     "resend": "^4.0.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.169.0",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },

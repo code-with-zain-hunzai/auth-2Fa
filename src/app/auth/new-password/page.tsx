@@ -1,4 +1,4 @@
-import ForgetForm from "@/components/auth/forgot-form"
+import ForgetForm from "@/components/auth/new-password-form"
 
 
 const NewPasswordPage = () => {
