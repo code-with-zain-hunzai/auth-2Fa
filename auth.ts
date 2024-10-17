@@ -3,6 +3,7 @@ import authConfig from "./auth.config"
 import { getUserById } from "./data/user"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { db } from "@/lib/db"
+import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
 
 
 export const {
@@ -25,7 +26,6 @@ export const {
     },
     callbacks: {
         async signIn({ user, account }) {
-            console.log({ user, account })
             if (account?.provider !== "credentials") return true;
 
             if (!user?.id) {
@@ -37,6 +37,20 @@ export const {
             if (!existingUser?.emailVerified) return false;
 
             //TODO: Add 2fa check
+
+            if (!existingUser.isTwoFactorEnabled) {
+                return false
+                // const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id)
+
+                // console.log(twoFactorConfirmation)
+
+                // if (!twoFactorConfirmation) return false
+
+                // // Delete two factor confirmation for next sign in
+                // await db.twoFactorConfirmation.delete({
+                //     where: { id: twoFactorConfirmation.id }
+                // })
+            }
 
             return true;
         },
