@@ -27,52 +27,52 @@ export const {
     callbacks: {
         async signIn({ user, account }) {
             if (account?.provider !== "credentials") return true;
-
+    
             if (!user?.id) {
+                console.log("User ID not found.");
                 return false;
             }
-
+    
             const existingUser = await getUserById(user.id);
-
-            if (!existingUser?.emailVerified) return false;
-
-            //TODO: Add 2fa check
-
-            if (!existingUser.isTwoFactorEnabled) {
-                return false
-                // const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id)
-
-                // console.log(twoFactorConfirmation)
-
-                // if (!twoFactorConfirmation) return false
-
-                // // Delete two factor confirmation for next sign in
-                // await db.twoFactorConfirmation.delete({
-                //     where: { id: twoFactorConfirmation.id }
-                // })
+    
+            // Prevent sign in without email verification
+            if (!existingUser?.emailVerified) {
+                console.log("Email not verified.");
+                return false;
             }
-
-            return true;
+    
+            // Check if 2FA is enabled for the user
+            if (existingUser.isTwoFactorEnabled) {
+                // Here you should implement the logic to check if the 2FA code has been provided and is valid.
+                // For example, you might want to redirect the user to a 2FA input page or validate a token.
+                const isTwoFactorConfirmed = await getTwoFactorConfirmationByUserId(user.id);
+                if (!isTwoFactorConfirmed) {
+                    console.log("2FA not confirmed.");
+                    return false; // Block login if 2FA is not confirmed
+                }
+            }
+    
+            return true; // Allow login if all checks pass
         },
         async session({ token, session }) {
             if (token.sub && session.user) {
-                session.user.id = token.sub
+                session.user.id = token.sub;
             }
-
+    
             if (token.role && session.user) {
                 session.user.role = token.role;
             }
-            return session
+            return session;
         },
         async jwt({ token }) {
             if (!token.sub) return token;
             const existingUser = await getUserById(token.sub);
-
+    
             if (!existingUser) return token;
-
-            token.role = existingUser.role
-
-            return token
+    
+            token.role = existingUser.role;
+    
+            return token;
         }
     },
     adapter: PrismaAdapter(db),
