@@ -35,16 +35,12 @@ export const {
     
             const existingUser = await getUserById(user.id);
     
-            // Prevent sign in without email verification
             if (!existingUser?.emailVerified) {
                 console.log("Email not verified.");
                 return false;
             }
     
-            // Check if 2FA is enabled for the user
             if (existingUser.isTwoFactorEnabled) {
-                // Here you should implement the logic to check if the 2FA code has been provided and is valid.
-                // For example, you might want to redirect the user to a 2FA input page or validate a token.
                 const isTwoFactorConfirmed = await getTwoFactorConfirmationByUserId(user.id);
                 if (!isTwoFactorConfirmed) {
                     console.log("2FA not confirmed.");
