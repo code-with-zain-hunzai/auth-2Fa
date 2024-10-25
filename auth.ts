@@ -6,6 +6,8 @@ import { db } from "@/lib/db"
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
 
 
+
+
 export const {
     handlers: { GET, POST },
     auth,
@@ -28,12 +30,15 @@ export const {
         async signIn({ user, account }) {
             if (account?.provider !== "credentials") return true;
 
+
             if (!user?.id) {
                 console.log("User ID not found.");
                 return false;
             }
 
+
             const existingUser = await getUserById(user.id);
+
 
             // Prevent sign in without email verification
             if (!existingUser?.emailVerified) {
@@ -41,18 +46,23 @@ export const {
                 return false;
             }
 
+
             // Check if 2FA is enabled for the user
             if (existingUser.isTwoFactorEnabled) {
                 const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
 
+
                 console.log({ twoFactorConfirmation })
 
+
                 if (!twoFactorConfirmation) return false;
+
 
                 await db.twoFactorConfirmation.delete({
                     where: { id: twoFactorConfirmation.id }
                 })
             }
+
 
             return true; // Allow login if all checks pass
         },
@@ -60,6 +70,7 @@ export const {
             if (token.sub && session.user) {
                 session.user.id = token.sub;
             }
+
 
             if (token.role && session.user) {
                 session.user.role = token.role;
@@ -70,9 +81,12 @@ export const {
             if (!token.sub) return token;
             const existingUser = await getUserById(token.sub);
 
+
             if (!existingUser) return token;
 
+
             token.role = existingUser.role;
+
 
             return token;
         }

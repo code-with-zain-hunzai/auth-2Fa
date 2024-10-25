@@ -22,14 +22,18 @@ import { Login } from "../../../actions/login";
 import { useState, useTransition } from "react";
 
 
+
+
 const LoginForm = () => {
     const searchParams = useSearchParams();
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different provider!" : "";
+
 
     const [showTwoFactor, setShowTwoFactor] = useState(false)
     const [error, setError] = useState<string | undefined>("")
     const [success, setSuccess] = useState<string | undefined>("")
     const [isPending, startTransition] = useTransition()
+
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -39,9 +43,11 @@ const LoginForm = () => {
         },
     });
 
+
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
         setError("");
         setSuccess("");
+
 
         startTransition(() => {
             Login(values)
@@ -51,10 +57,12 @@ const LoginForm = () => {
                         setError(data.error)
                     }
 
+
                     if (data?.success) {
                         form.reset()
                         setSuccess(data.success)
                     }
+
 
                     if (data?.twoFactor) {
                         setShowTwoFactor(true)
@@ -63,6 +71,7 @@ const LoginForm = () => {
                 .catch(() => setError("Something went wrong"))
         })
     }
+
 
     return (
         <CardWrapper
@@ -145,5 +154,6 @@ const LoginForm = () => {
         </CardWrapper>
     );
 };
+
 
 export default LoginForm;
