@@ -11,7 +11,7 @@ await resend.emails.send({
     from: "onboarding@resend.dev",
         to: email,
         subject: "2Fa Code",
-        html: `<p>${token}</p>`
+        html: `<p>Your 2Fa code ${token}</p>`
 })
 }
 export const sendPasswordResetEmail = async (
