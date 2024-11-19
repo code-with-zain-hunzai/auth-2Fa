@@ -35,6 +35,7 @@ import {
     SelectValue
 } from "@/components/ui/select"
 import { UserRole } from "@prisma/client"
+import { Switch } from "@/components/ui/switch"
 
 const settingsPage = () => {
     const user = useCurrentUser()
@@ -96,53 +97,61 @@ const settingsPage = () => {
                                                 placeholder="zain"
                                                 disabled={isPending} />
                                         </FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 }} />
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => {
-                                    return <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="zaynhunzai5@gmail.com"
-                                                type="email"
-                                                disabled={isPending} />
-                                        </FormControl>
-                                    </FormItem>
-                                }} />
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => {
-                                    return <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="****"
-                                                type="password"
-                                                disabled={isPending} />
-                                        </FormControl>
-                                    </FormItem>
-                                }} />
-                            <FormField
-                                control={form.control}
-                                name="newPassword"
-                                render={({ field }) => {
-                                    return <FormItem>
-                                        <FormLabel>New Password</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="****"
-                                                type="password"
-                                                disabled={isPending} />
-                                        </FormControl>
-                                    </FormItem>
-                                }} />
+                            {user?.isOAuth === false && (
+                                <>
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => {
+                                            return <FormItem>
+                                                <FormLabel>Email</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        placeholder="zaynhunzai5@gmail.com"
+                                                        type="email"
+                                                        disabled={isPending} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        }} />
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => {
+                                            return <FormItem>
+                                                <FormLabel>Password</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        placeholder="****"
+                                                        type="password"
+                                                        disabled={isPending} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        }} />
+                                    <FormField
+                                        control={form.control}
+                                        name="newPassword"
+                                        render={({ field }) => {
+                                            return <FormItem>
+                                                <FormLabel>New Password</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        placeholder="****"
+                                                        type="password"
+                                                        disabled={isPending} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        }} />
+                                </>
+                            )}
                             <FormField
                                 control={form.control}
                                 name="role"
@@ -162,10 +171,30 @@ const settingsPage = () => {
                                                 <SelectItem value={UserRole.USER}>User</SelectItem>
                                             </SelectContent>
                                         </Select>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
-
+                            {user?.isOAuth ===false &&(
+                                <FormField
+                                    control={form.control}
+                                    name="isTwoFactorEnabled"
+                                    render={({ field }) => {
+                                        return <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                                            <div className="space-y-0 5">
+                                                <FormLabel>Two Factor Authentication</FormLabel>
+                                                <FormDescription>Enabled Two Factor Authentication For Your Account</FormDescription>
+                                            </div>
+                                            <FormControl>
+                                                <Switch
+                                                    disabled={isPending}
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange} />
+                                            </FormControl>
+                                        </FormItem>
+                                    }}
+                                />
+                            )}
                         </div>
                         <FormError message={error} />
                         <FormSuccess message={success} />
