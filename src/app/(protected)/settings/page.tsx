@@ -37,7 +37,7 @@ import {
 import { UserRole } from "@prisma/client"
 import { Switch } from "@/components/ui/switch"
 
-const settingsPage = () => {
+const SettingsPage = () => {
     const user = useCurrentUser()
     const [error, setError] = useState<string | undefined>();
     const [success, setSuccess] = useState<string | undefined>();
@@ -209,4 +209,4 @@ const settingsPage = () => {
         </Card>
     )
 }
-export default settingsPage
+export default SettingsPage
