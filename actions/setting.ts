@@ -13,10 +13,10 @@ import { update } from "../auth";
 export const settings = async (
     values: z.infer<typeof SettingsSchema>
 ) => {
-    const user = await currentUser()
+    const user = await currentUser();
 
-    if (!user) {
-        return { error: "Unauthorized" }
+    if (!user || !user.id) {
+        return { error: "Unauthorized" };
     }
 
     const dbUser = await getUserById(user.id);
