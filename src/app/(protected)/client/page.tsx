@@ -7,10 +7,12 @@ const ClientPage = () => {
     const user = useCurrentUser();
 
     return (
-        <UserInfo
+        <div className="w-[600px]">
+        <UserInfo 
             label="📱Client Component"
             user={user}
         />
+        </div>
     );
 }
 

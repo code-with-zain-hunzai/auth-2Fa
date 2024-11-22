@@ -4,13 +4,16 @@ import { signIn } from "next-auth/react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
 import { Button } from "../ui/button"
+import { useSearchParams } from "next/navigation"
 
-const DEFAULT_LOGIN_REDIRECT = "/settings" // Update as per your redirect
+const DEFAULT_LOGIN_REDIRECT = "/settings"
 
 export const Social = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const onClick = (provider: "google" | "github") => {
     signIn(provider, {
-      callbackUrl: DEFAULT_LOGIN_REDIRECT
+      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT
     }).catch(err => console.error(err)); // Error handling
   }
 

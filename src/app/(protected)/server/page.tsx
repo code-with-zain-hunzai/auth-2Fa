@@ -5,10 +5,11 @@ import { currentUser } from "@/lib/auth";
 const ServerPage = async () => {
     const user = await currentUser();
     return (
-        <UserInfo
-        label="💻 Server Component"
-        user={user}/>
-
+        <div className="w-[600px]">
+            <UserInfo
+                label="💻 Server Component"
+                user={user} />
+        </div>
     );
 }
 

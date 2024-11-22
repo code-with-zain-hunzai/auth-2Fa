@@ -26,6 +26,7 @@ import { useState, useTransition } from "react";
 
 const LoginForm = () => {
     const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl")
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different provider!" : "";
 
 
@@ -50,7 +51,7 @@ const LoginForm = () => {
 
 
         startTransition(() => {
-            Login(values)
+            Login(values, callbackUrl)
                 .then((data) => {
                     if (data?.error) {
                         form.reset()
